@@ -1,0 +1,2 @@
+[xblock.v1]
+student_registration = student_registration:StudentRegistrationXBlock

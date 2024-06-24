@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: student-attendance-xblock
+Version: 0.1
+Summary: student_attendance XBlock
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Dist: XBlock
+
+UNKNOWN

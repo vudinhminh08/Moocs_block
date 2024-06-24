@@ -1,0 +1,2 @@
+[xblock.v1]
+student_attendance = student_attendance:StudentAttendanceXBlock

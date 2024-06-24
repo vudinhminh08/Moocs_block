@@ -1,0 +1,13 @@
+setup.py
+student_attendance/__init__.py
+student_attendance/student_attendance.py
+student_attendance/static/README.txt
+student_attendance/static/css/student_attendance.css
+student_attendance/static/html/student_attendance.html
+student_attendance/static/js/src/student_attendance.js
+student_attendance_xblock.egg-info/PKG-INFO
+student_attendance_xblock.egg-info/SOURCES.txt
+student_attendance_xblock.egg-info/dependency_links.txt
+student_attendance_xblock.egg-info/entry_points.txt
+student_attendance_xblock.egg-info/requires.txt
+student_attendance_xblock.egg-info/top_level.txt
