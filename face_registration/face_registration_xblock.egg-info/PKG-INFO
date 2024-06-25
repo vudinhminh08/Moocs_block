@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: face_registration-xblock
+Version: 0.1
+Summary: face_registration XBlock
+License: UNKNOWN
+Requires-Dist: XBlock

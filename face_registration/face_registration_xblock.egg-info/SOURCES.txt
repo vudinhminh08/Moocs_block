@@ -1,0 +1,14 @@
+setup.py
+face_registration/__init__.py
+face_registration/face_registration.py
+face_registration/static/README.txt
+face_registration/static/css/face_registration.css
+face_registration/static/html/face_registration.html
+face_registration/static/js/src/face_registration.js
+face_registration/static/js/src/opencv.js
+face_registration_xblock.egg-info/PKG-INFO
+face_registration_xblock.egg-info/SOURCES.txt
+face_registration_xblock.egg-info/dependency_links.txt
+face_registration_xblock.egg-info/entry_points.txt
+face_registration_xblock.egg-info/requires.txt
+face_registration_xblock.egg-info/top_level.txt

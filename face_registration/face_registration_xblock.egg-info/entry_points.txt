@@ -1,0 +1,2 @@
+[xblock.v1]
+face_registration = face_registration:FaceRegistrationXBlock

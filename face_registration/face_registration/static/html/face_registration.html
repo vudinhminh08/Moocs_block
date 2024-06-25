@@ -1,0 +1,29 @@
+<!-- <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1/dist/face-api.js"></script> -->
+<div class="devfacebank_block">
+    <h2 id="title-instruction">
+        Please put your face straight into the camera!
+    </h2>
+    <div class="facebank-container">
+        <div class="video-container">
+            <div id="status">Correct head position</div>
+            <div class="video-area">
+                <video id="webcam" autoplay playsinline width="640" height="480"></video>
+                <button id="capture-button">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="image-container">
+            </div>
+        </div>
+        <div class="demo-container">
+            <button id="confirm-button">Confirm<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+            <div id="example">
+                <h3>Example</h3>
+                <img id="image-instruction" src="https://i.gifer.com/3OYiI.gif"></img>
+            </div>
+
+        </div>
+    </div>
+    <canvas id="canvas" class="d-none"></canvas>
+    <!-- <audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio> -->
+</div>

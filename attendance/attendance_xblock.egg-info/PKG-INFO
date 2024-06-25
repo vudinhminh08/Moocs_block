@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: attendance-xblock
+Version: 0.1
+Summary: attendance XBlock
+License: UNKNOWN
+Requires-Dist: XBlock

@@ -1,0 +1,27 @@
+<!-- <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script> -->
+<div class="attendance_block">
+    <h2 id="title-instruction">
+        Please put your face straight into the camera!
+    </h2>
+    <div class="attendance-container">
+        <div class="video-container">
+            <div class="video-area">
+                <video id="webcam" autoplay playsinline width="640" height="480"></video>
+                <button id="capture-button">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div class="confirm-container">
+            <button id="confirm-button">Confirm<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+
+            <div id="image-container">
+                <div class="image-wrapper">
+                    <img id="image"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas id="canvas" class="d-none"></canvas>
+    <!-- <audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio> -->
+</div>
