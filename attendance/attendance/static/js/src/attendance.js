@@ -193,9 +193,64 @@ function AttendanceXBlock(runtime, element) {
     const snapSoundElement = document.getElementById('snapSound');
     const webcam = new WebcamAttendance(webcamElement, 'user', canvasElement, snapSoundElement);
     const image = document.getElementById('image');
+    const currentUrl = window.location.href;
+    const match = currentUrl.match(/courses\/([^/]+)/);
+    const class_id = match ? match[1] : null;
 
     const confirmButton = document.getElementById("confirm-button");
-
+    userInfo = {}
+    const getUser = function () {
+        var handlerUrl = runtime.handlerUrl(element, 'get_user_info');
+        $.ajax({
+            type: "POST",
+            url: handlerUrl,
+            data: JSON.stringify({}),
+            success: getUserFromBackend
+        });
+    }
+    const getUserFromBackend = function (res) {
+        userInfo = res.user_info;
+        email = res.user_info.email;
+        student_id = userInfo.username;
+    }
+    getUser();
+    async function login() {
+        var settings = {
+            "url": "https://aiserver.daotao.ai/api/v1/login/access-token",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "grant_type": "",
+                "username": "edtech",
+                "password": "hMJzj6Vb79WB",
+                "scope": "",
+                "client_id": "",
+                "client_secret": ""
+            }
+        };
+        return new Promise((resolve, reject) => {
+            $.ajax(settings).done(function (response) {
+                resolve(response);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                reject(new Error('AJAX Error: ' + textStatus + ': ' + errorThrown));
+            });
+        });
+    }
+    var accessToken
+    async function getAccessToken() {
+        try {
+            const response = await login();
+            accessToken = response.access_token;
+            return accessToken;
+        } catch (error) {
+            console.error("Failed to login and get access token:", error);
+        }
+    }
+    getAccessToken();
     $(document).ready(function () {
         startWebcam()
     });
@@ -218,21 +273,31 @@ function AttendanceXBlock(runtime, element) {
     }
     $("#capture-button").click(capturePortrait);
 
-    function submitImage(res){
-        const user_infor = res.user_info
-        console.log(user_infor.email)
-    }
+    $("#confirm-button").click(function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://aiserver.daotao.ai/api/v1/attendances/');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 
-    var handlerUrl = runtime.handlerUrl(element, 'get_user_info');
-
-    $('#confirm-button', element).click(function () {
-        $.ajax({
-            type: "POST",
-            url: handlerUrl,
-            data: JSON.stringify({}),
-            success: submitImage
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Parse the response data
+                var data = JSON.parse(xhr.responseText);
+            } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                console.error('Error:', xhr.status);
+            }
+        };
+        var data = JSON.stringify({
+            "course_id": class_id,
+            "student_id": student_id,
+            "portrait": image.src
         });
+        xhr.send(data);
     });
+
+
 
 
     $(function ($) {

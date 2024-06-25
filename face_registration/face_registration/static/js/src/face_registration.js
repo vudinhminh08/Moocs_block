@@ -188,7 +188,7 @@ class WebcamFaceRegistration {
 
 function FaceRegistrationXBlock(runtime, element) {
 
-    const MODEL_URL = "/static/models";
+    const MODEL_URL = "/static/training-models";
     const webcamElement = document.getElementById('webcam');
     const canvasElement = document.getElementById('canvas');
     const snapSoundElement = document.getElementById('snapSound');
@@ -243,19 +243,13 @@ function FaceRegistrationXBlock(runtime, element) {
     }
     const getUserFromBackend = function (res) {
         userInfo = res.user_info;
-        email = res.user_info.email
-        const match = email.match(/\d+(?=@)/);
-        if (match) {
-            const number = match[0]; // Lấy phần số từ kết quả match
-            student_id = `20${number}`; // Thêm số 20 đằng trước
-        } else {
-            console.log('Can not find student ID');
-        }
+        email = res.user_info.email;
+        student_id = userInfo.username;
     }
     getUser();
     async function login() {
         var settings = {
-            "url": "http://localhost:3333/api/v1/login/access-token",
+            "url": "https://aiserver.daotao.ai/api/v1/login/access-token",
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -451,7 +445,6 @@ function FaceRegistrationXBlock(runtime, element) {
         const state = await detect(detections)
 
         if (state < 0) {
-            console.log("state, currentImageIndex: ", state, currentImageIndex);
             alert("INCORRECT POSITION, TAKE A PHOTO AGAIN")
             return
         }
@@ -516,7 +509,7 @@ function FaceRegistrationXBlock(runtime, element) {
     $("#capture-button").click(capturePortrait);
     $("#confirm-button").click(function () {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:3333/api/v1/students');
+        xhr.open('POST', 'https://aiserver.daotao.ai/api/v1/students/');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
         xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
@@ -524,7 +517,7 @@ function FaceRegistrationXBlock(runtime, element) {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Parse the response data
+                alert('Register successfully');
                 var data = JSON.parse(xhr.responseText);
             } else if (xhr.readyState === 4 && xhr.status !== 200) {
                 console.error('Error:', xhr.status);
