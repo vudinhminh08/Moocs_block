@@ -1,0 +1,2 @@
+[xblock.v1]
+ai_exam = ai_exam:AIExamXBlock

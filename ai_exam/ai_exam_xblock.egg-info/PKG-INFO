@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: ai_exam-xblock
+Version: 0.1
+Summary: ai_exam XBlock
+License: UNKNOWN
+Requires-Dist: XBlock

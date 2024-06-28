@@ -147,7 +147,6 @@ class WebcamAttendance {
                     resolve(this._facingMode);
                 })
                 .catch(error => {
-                    console.log(error);
                     reject(error);
                 });
         });
@@ -245,7 +244,7 @@ function AttendanceXBlock(runtime, element) {
         try {
             const response = await login();
             accessToken = response.access_token;
-            return accessToken;
+            return 
         } catch (error) {
             console.error("Failed to login and get access token:", error);
         }
@@ -283,8 +282,8 @@ function AttendanceXBlock(runtime, element) {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Parse the response data
-                var data = JSON.parse(xhr.responseText);
+                alert("Attendance checked successfully!")
+                $('#confirm-button').prop('disabled', true);
             } else if (xhr.readyState === 4 && xhr.status !== 200) {
                 console.error('Error:', xhr.status);
             }

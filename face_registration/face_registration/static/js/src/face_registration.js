@@ -147,7 +147,6 @@ class WebcamFaceRegistration {
                     resolve(this._facingMode);
                 })
                 .catch(error => {
-                    console.log(error);
                     reject(error);
                 });
         });
@@ -284,23 +283,33 @@ function FaceRegistrationXBlock(runtime, element) {
         }
     }
     getAccessToken();
-    setInterval(function () {
-        if (checkImgs.every(element => element)) {
-            captureButton.style.display = "none";
-            captureButton.disabled = true;
-            confirmButton.style.display = "block";
-            confirmButton.disabled = false;
-            titleInstruction.innerText = "Please confirm your portraits";
-            exampleElement.style.display = "none";
-        }
-        else {
-            captureButton.style.display = "block";
-            captureButton.disabled = false;
-            confirmButton.style.display = "none";
-            confirmButton.disabled = true;
-            exampleElement.style.display = "block";
-        }
-    }, 100);
+    let intervalId;
+
+    function startCheckingImages() {
+        intervalId = setInterval(function () {
+            if (checkImgs.every(element => element)) {
+                captureButton.style.display = "none";
+                captureButton.disabled = true;
+                confirmButton.style.display = "block";
+                confirmButton.disabled = false;
+                titleInstruction.innerText = "Please confirm your portraits";
+                exampleElement.style.display = "none";
+            }
+            else {
+                captureButton.style.display = "block";
+                captureButton.disabled = false;
+                confirmButton.style.display = "none";
+                confirmButton.disabled = true;
+                exampleElement.style.display = "block";
+            }
+        }, 100);
+    }
+
+    function stopCheckingImages() {
+        clearInterval(intervalId);
+    }
+
+    startCheckingImages();
 
     function setInstruction(index) {
         titleInstruction.innerText = labels[index];
@@ -518,7 +527,8 @@ function FaceRegistrationXBlock(runtime, element) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 alert('Register successfully');
-                var data = JSON.parse(xhr.responseText);
+                stopCheckingImages()
+                $('#confirm-button').prop('disabled', true);
             } else if (xhr.readyState === 4 && xhr.status !== 200) {
                 console.error('Error:', xhr.status);
             }
