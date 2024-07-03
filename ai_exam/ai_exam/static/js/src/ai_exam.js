@@ -30,7 +30,7 @@ function AIExamXBlock(runtime, element) {
 
     function getStudentID(res) {
 
-        
+
         studentID = res.user_info.username;
 
         getAttendaceID()
@@ -164,11 +164,9 @@ function AIExamXBlock(runtime, element) {
         }
     }
 
-    // Initial call to start the process
-    imagesCollector();
-
-    // Set interval to call imagesCollector every 3 seconds
-    setInterval(imagesCollector, 3000);
+    setTimeout(function () {
+        setInterval(imagesCollector, 3000);
+    }, 5000);
 
     $(window).on("beforeunload", function () {
         localStorage.removeItem("attendance_id");
