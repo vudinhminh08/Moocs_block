@@ -421,21 +421,24 @@ function FaceRegistrationXBlock(runtime, element) {
         return state_img;
     }
     async function detect(detections) {
-
-        if (detections == undefined) {
-            return -2
-        }
         const peopleCount = detections.length;
-        if (peopleCount == 0) {
-            return -2
+        if (peopleCount >= 2) {
+            return -1;
         }
-        else if (peopleCount == 1) {
+        else if (peopleCount === 1) {
+            if (currentImageIndex >= 1) {
+                let distance = faceapi.euclideanDistance(
+                    detections[0].descriptor,
+                    imageDescriptor[0]
+                );
+                if (distance > 0.42) {
+                    return -4
+                }
+            }
             var state = detectHeadpose(detections[0]);
             return state
         }
-        else {
-            return -1
-        }
+        else return -2;
     }
     async function capturePortrait() {
         snapButtonElement.disabled = true;
@@ -454,18 +457,21 @@ function FaceRegistrationXBlock(runtime, element) {
         const state = await detect(detections)
 
         if (state < 0) {
-            alert("INCORRECT POSITION, TAKE A PHOTO AGAIN")
-            return
-        }
-
-        if (currentImageIndex >= 1) {
-            let distance = faceapi.euclideanDistance(
-                detections[0].descriptor,
-                imageDescriptor[0]
-            );
-            if (distance > 0.5) {
-                alert("NOT MATCH FACE")
-                return
+            if (state === -1) {
+                alert("MORE THAN ONE PERSON IN THE CAMERA, TAKE A PHOTO AGAIN");
+                return;
+            }
+            else if (state === -2) {
+                alert("CAN NOT DETECT FACE, TAKE A PHOTO AGAIN");
+                return;
+            }
+            else if (state === -4) {
+                alert("NOT MATCH FACE, TAKE A PHOTO AGAIN");
+                return;
+            }
+            else {
+                alert("INCORRECT POSITION, TAKE A PHOTO AGAIN")
+                return;
             }
         }
 
